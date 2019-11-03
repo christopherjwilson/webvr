@@ -1,0 +1,220 @@
+#coin {
+  position: relative;
+  margin: 0 auto;
+  width: 100px;
+  height: 100px;
+  cursor: pointer;
+}
+#coin div {
+  width: 100%;
+  height: 100%;
+  -webkit-border-radius: 50%;
+     -moz-border-radius: 50%;
+          border-radius: 50%;
+ -webkit-box-shadow: inset 0 0 45px rgba(255,255,255,.3), 0 12px 20px -10px rgba(0,0,0,.4);
+     -moz-box-shadow: inset 0 0 45px rgba(255,255,255,.3), 0 12px 20px -10px rgba(0,0,0,.4);
+          box-shadow: inset 0 0 45px rgba(255,255,255,.3), 0 12px 20px -10px rgba(0,0,0,.4); 
+}
+.side-a {
+  /* background-color: #ffffff; */
+  background-image: url('h_coin.png');
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Do not repeat the image */
+  background-size: cover; /* Resize the background image to cover the entire container */
+}
+.side-b {
+   /* background-color: #ffffff; */
+  background-image: url('t_coin.png');
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Do not repeat the image */
+  background-size: cover; /* Resize the background image to cover the entire container */
+}
+
+#coin {
+  transition: -webkit-transform 1s ease-in;
+  -webkit-transform-style: preserve-3d;
+}
+#coin div {
+  position: absolute;
+  -webkit-backface-visibility: hidden;
+}
+.side-a {
+  z-index: 100;
+}
+.side-b {
+  -webkit-transform: rotateY(-180deg);
+
+}
+
+#coin.heads {
+  -webkit-animation: flipHeads 3s ease-out forwards;
+  -moz-animation: flipHeads 3s ease-out forwards;
+    -o-animation: flipHeads 3s ease-out forwards;
+       animation: flipHeads 3s ease-out forwards;
+}
+#coin.tails {
+  -webkit-animation: flipTails 3s ease-out forwards;
+  -moz-animation: flipTails 3s ease-out forwards;
+    -o-animation: flipTails 3s ease-out forwards;
+       animation: flipTails 3s ease-out forwards;
+}
+
+@-webkit-keyframes flipHeads {
+  from { -webkit-transform: rotateY(0); -moz-transform: rotateY(0); transform: rotateY(0); }
+  to { -webkit-transform: rotateY(1800deg); -moz-transform: rotateY(1800deg); transform: rotateY(1800deg); }
+}
+@-webkit-keyframes flipTails {
+  from { -webkit-transform: rotateY(0); -moz-transform: rotateY(0); transform: rotateY(0); }
+  to { -webkit-transform: rotateY(1980deg); -moz-transform: rotateY(1980deg); transform: rotateY(1980deg); }
+}
+
+#odds {
+  clear: both;
+  margin: 10px;
+  font-size: large;
+  width: 100%;
+}
+
+#win_value {
+  float: left;
+  font-size: 30px;
+  color: green;
+  font-weight: bolder;
+}
+
+#loss_value {
+  float: right;
+  font-size: 30px;
+  color: red;
+  font-weight: bolder;
+}
+
+.prompt{
+  margin-top: 50px;
+  clear: both;
+  font-size: 20px;
+}
+/* General appearance*/
+
+input[type=checkbox]
+{
+  /* Double-sized Checkboxes */
+  -ms-transform: scale(2); /* IE */
+  -moz-transform: scale(2); /* FF */
+  -webkit-transform: scale(2); /* Safari and Chrome */
+  -o-transform: scale(2); /* Opera */
+  padding: 10px;
+}
+
+input[type=radio]
+{
+  /* Double-sized Checkboxes */
+  -ms-transform: scale(2); /* IE */
+  -moz-transform: scale(2); /* FF */
+  -webkit-transform: scale(2); /* Safari and Chrome */
+  -o-transform: scale(2); /* Opera */
+  padding: 10px;
+}
+
+.jspsych-survey-likert-opt-label {
+  line-height: 2em;
+  color: #444;
+  font-size: large;
+}
+
+.jspsych-survey-likert-statement {
+  display: block;
+  font-size: 20px;
+  padding-top: 40px;
+  margin-bottom: 10px;
+}
+.jspsych-survey-likert-opts:before {
+  content: '';
+  position: relative;
+  top: 11px;
+  /* left: 9.5%; */
+  display: block;
+  background-color: #555;
+  height: 4px;
+  width: 100%;
+}
+
+.jspsych-survey-likert-preamble {
+font-size: larger;
+}
+
+.jspsych-survey-likert jspsych-btn {
+
+color: #fff;
+background-color: #5cb85c;
+border-color: #4cae4c;
+font-size: large;
+}
+
+#jspsych-fullscreen-btn{
+  color: #fff;
+  background-color: #5cb85c;
+  border-color: #4cae4c;
+  font-size: large;
+}
+
+/* The flip card container - set the width and height to whatever you want. We have added the border property to demonstrate that the flip itself goes out of the box on hover (remove perspective if you don't want the 3D effect */
+.flip-card {
+  background-color: transparent;
+  width: 120px;
+  height: 160px;
+  perspective: 1000px; /* Remove this if you don't want the 3D effect */
+  float: left;
+  margin:5px;
+}
+
+/* This container is needed to position the front and back side */
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+}
+
+/* Do an horizontal flip when you move the mouse over the flip box container */
+.flip-card:hover .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+/* Position the front and back side */
+.flip-card-front, .flip-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+}
+
+/* Style the front side (fallback if image is missing) */
+.flip-card-front {
+  background-color: #bbb;
+  color: black;
+}
+
+/* Style the back side */
+.flip-card-back {
+  background-color: dodgerblue;
+  color: white;
+  transform: rotateY(180deg);
+}
+
+/*   ############################################## */
+.jspsych-target{
+  margin: 0px; height: 90%; width: 100%;
+}
+
+#jatos-quit button {
+
+  height: 100%;
+  font-size: small;
+  }
+  
+  #jatos-quit button:hover { 
+    background-color: #fc0606;
+  }
