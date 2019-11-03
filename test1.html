@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="jspsych-6.0.5/jspsych.js"></script>
+        <script src="jspsych-6.0.5/plugins/jspsych-instructions.js"></script>
+        <link rel="stylesheet" href="jspsych-6.0.5/css/jspsych.css">
+        <script src="https://aframe.io/releases/0.9.2/aframe.min.js"></script>
+        <script src="jspsych-6.0.5/plugins/jspsych-external-html.js"></script>
+    </head>
+    <body>
+    </body>
+    <script>
+   // declare the block.
+
+var timeline = []   ;
+
+var vrTrials = {
+  type:'external-html',
+  url: "vrtrial.html",
+  data: {phase: "consent"},
+  execute_script: true,
+ 
+ 
+};
+
+  timeline.push(vrTrials);
+    jsPsych.init({      
+        timeline: timeline,      
+    });
+    </script>
+</html>
