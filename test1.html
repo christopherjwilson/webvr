@@ -1,29 +1,39 @@
 <!DOCTYPE html>
 <html>
     <head>
-        
+     <script src="https://aframe.io/releases/0.9.2/aframe.min.js"></script> 
+     <script src="https://unpkg.com/aframe-event-set-component@^4.0.0/dist/aframe-event-set-component.min.js"></script>
+      <script src="jatos.js"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <link rel="stylesheet" href="jspsych-6.0.5/css/jspsych.css">
-        <script src="https://aframe.io/releases/0.9.2/aframe.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.0.1/dist/aframe-extras.min.js"></script>
         <script src="jspsych-6.0.5/jspsych.js"></script>
         <script src="jspsych-6.0.5/plugins/jspsych-instructions.js"></script>
-        <script src="jspsych-6.0.5/plugins/jspsych-external-html.js"></script>
-    </head>
-    <body>
-    </body>
-    <script>
+        <script src="jspsych-6.0.5/plugins/jspsych-html-keyboard-response.js"></script>
+    </head>      
+
+      <body style="margin: 0px; height: 100%; width: 100%;">
+        <div id ="jatos-quit"><button  class= "btn btn-warning btn-block" onclick="jatos.abortStudy()">Cancel Study</button></div>      
+
+          <div id="jspsych-target" class="jspsych-display-element" style="margin: 0px; height: 95%; width: 100%;"></div>
+          
+  
+      </body>
+      <script>
+
+jatos.onLoad(function () {   
+
    // declare the block.
 
 var timeline = []   ;
 
-var urls = [
-      {phase: "experiment", url: "trial1.html", correct:"Z" },
-      {phase: "experiment", url: "trial12.html", correct:"Z" }
+var trials = [
+      {phase: "experiment", stimulus: "<h1>test</h1>", correct:"Z" },
+      {phase: "experiment", stimulus: '     <a-entity id="camera" camera="userHeight: 1.6" look-controls cursor="rayOrigin: mouse"></a-entity><a-scene><a-box position="-1 0.5 -3" rotation="0 45 0" color="#4CC3D9"></a-box><a-sphere position="0 1.25 -5" radius="1.25" color="#EF2D5E"></a-sphere><a-cylinder position="1 0.75 -3" radius="0.5" height="1.5" color="#FFC65D"></a-cylinder><a-plane position="0 0 -4" rotation="-90 0 0" width="4" height="4" color="#7BC8A4"></a-plane> <a-sky color="#ECECEC"></a-sky></a-scene>', correct:"Z" }
 ];
 
-var vrTrials = {
-  type:'external-html',
-  url: jsPsych.timelineVariable('url'),
+var trialBlock = {
+  type:'html-keyboard-response',
+  stimulus: jsPsych.timelineVariable('stimulus'),
   data: {phase: jsPsych.timelineVariable('phase'), correct:jsPsych.timelineVariable('correct')},
   choices: ['M', 'Z'],
   execute_script: true
@@ -32,13 +42,54 @@ var vrTrials = {
 };
 
 var exp_procedure = {
-  timeline: [vrTrials],
-  timeline_variables: urls
+  timeline: [trialBlock],
+  timeline_variables: trials
 }
 
-  timeline.push(exp_procedure);
-    jsPsych.init({      
-        timeline: timeline,      
+timeline.push(exp_procedure);
+
+
+//############################################### end of jspsych functions / code
+
+    // define the redirect function for the end of the study      
+    // 'redirect_url' is defined here
+    var  redirect_url = "localhost:9000";
+
+    var end_study_fn = function() {
+        var redirect_fn = function () {return window.location.replace(redirect_url);};
+        jatos.endStudyAjax(true, "REDIRECTED", redirect_fn);
+    };
+timeline.push(exp_procedure);
+
+    // initialise jspsych
+        jsPsych.init({
+           display_element: 'jspsych-target',
+           exclusions: {
+              min_width: 800,
+              min_height: 600
+            },
+            timeline: timeline,
+            show_progress_bar: true,
+            on_finish: function() {
+              var resultsData = jsPsych.data.get().json();
+              jatos.submitResultData(resultsData, end_study_fn);
+        
+            },
+            on_data_update: function(data) {
+              var resultsData = jsPsych.data.get().json();
+          
+                },
+                on_interaction_data_update: function(data) {
+         
+                  var interactionData = jsPsych.data.getInteractionData().json();
+                 
+                }
+
+
+        });
     });
+
+  
+   
     </script>
 </html>
